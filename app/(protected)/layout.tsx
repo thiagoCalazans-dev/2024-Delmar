@@ -1,6 +1,9 @@
 import { redirect } from "next/navigation";
 
-import { createServerClient } from "@/utils/supabase/server";
+import { createServerClient } from "@/lib/supabase/server";
+
+import { Button } from "@/components/ui/button";
+import { signOut } from "@/actions/auth";
 
 export default async function PrivateLayout({
   children,
@@ -16,7 +19,12 @@ export default async function PrivateLayout({
 
   return (
     <>
-      <p>Hello {data.user.email}</p>
+      <form className="w-full h-20 flex justify-between px-4 items-center">
+        <p>Hello {data.user.email}</p>
+        <Button formAction={signOut} className="w-full">
+          Sign Out
+        </Button>
+      </form>
       {children}
     </>
   );
