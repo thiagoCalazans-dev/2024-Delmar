@@ -37,6 +37,7 @@ export async function ProductTable({ limit, page }: any) {
           <TableHead className="hidden lg:table-cell">Color</TableHead>
           <TableHead className="hidden md:table-cell">Cost</TableHead>
           <TableHead>Price</TableHead>
+          <TableHead>Quantity</TableHead>
           <TableHead>
             <span className="sr-only">Actions</span>
           </TableHead>
@@ -68,6 +69,7 @@ export async function ProductTable({ limit, page }: any) {
               <TableCell className="font-medium">
                 {formatCurrencyTo.Real(item.price)}
               </TableCell>
+              <TableCell className="font-medium">{item.quantity}</TableCell>
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -89,7 +91,7 @@ export async function ProductTable({ limit, page }: any) {
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell colSpan={9}>
+          <TableCell colSpan={10}>
             <TablePagination params="products" total={total} pages={pages} />
           </TableCell>
         </TableRow>

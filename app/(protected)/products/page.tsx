@@ -27,7 +27,7 @@ export default async function Page({
   const limit = searchParams["limit"] ?? "10";
 
   return (
-    <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-4">
+    <main className="flex-1 items-start space-y-4 p-4 sm:px-6 sm:py-0 md:gap-4">
       <div className="flex items-center justify-between gap-4">
         <div className="relative  w-full ">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

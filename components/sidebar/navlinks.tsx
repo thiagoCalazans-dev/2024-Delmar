@@ -1,15 +1,10 @@
-import { LineChart, Package, ShoppingCart, Turtle } from "lucide-react";
+import { Package, ShoppingCart, Turtle } from "lucide-react";
 
 export const navLinks = [
   {
     name: "Home",
     href: "/",
     icon: <Turtle />,
-  },
-  {
-    name: "Dashboard",
-    href: "/dashboard",
-    icon: <LineChart />,
   },
   {
     name: "Orders",
