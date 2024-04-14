@@ -4,19 +4,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createServerClient } from "@/lib/supabase/server";
+import { FormLogin } from "@/app/login/page";
 
-export async function login(formData: FormData) {
+export async function login(data: FormLogin) {
   const supabase = createServerClient();
-
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
-
-  console.log(data);
-
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
