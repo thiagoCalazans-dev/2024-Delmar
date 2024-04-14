@@ -23,9 +23,6 @@ export default async function Page({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const page = searchParams["page"] ?? "1";
-  const limit = searchParams["limit"] ?? "10";
-
   return (
     <main className="flex-1 items-start space-y-4 p-4 sm:px-6 sm:py-0 md:gap-4">
       <div className="flex items-center justify-between gap-4">

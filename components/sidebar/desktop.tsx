@@ -11,7 +11,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navLinks } from "./navlinks";
 import { cn } from "@/lib/cn";
-import { Button } from "../ui/button";
 import { signOut } from "@/actions/auth";
 
 export function DesktopSidebar() {

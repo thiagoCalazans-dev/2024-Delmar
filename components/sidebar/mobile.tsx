@@ -6,9 +6,15 @@ import { PanelLeft, DoorOpen } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navLinks } from "./navlinks";
+import { signOut } from "@/actions/auth";
 
 export function MobileHeader() {
   const pathName = usePathname();
+
+  function onSignoutClick() {
+    signOut();
+  }
+
   return (
     <header className="sticky w-full top-0 z-30 flex h-14 justify-between items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>
@@ -41,6 +47,7 @@ export function MobileHeader() {
       </Sheet>
       <div className="sm:hidden">
         <Button
+          onClick={onSignoutClick}
           variant="outline"
           size="icon"
           className="overflow-hidden rounded-full"
