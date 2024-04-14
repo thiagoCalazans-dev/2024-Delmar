@@ -37,7 +37,7 @@ export async function ProductTable({ limit, page }: any) {
               <span className="">{item.name}</span>
               <div className="w-full flex justify-between items-center text-sm">
                 <span className=" text-muted-foreground">{item.code}</span>
-                <span>{item.size}</span>
+                <Badge>{item.size}</Badge>
               </div>
               <div className="w-full text-sm flex justify-between items-center">
                 <div>
@@ -119,14 +119,8 @@ export async function ProductTable({ limit, page }: any) {
             );
           })}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={10}>
-              <TablePagination params="products" total={total} pages={pages} />
-            </TableCell>
-          </TableRow>
-        </TableFooter>
       </Table>
+      <TablePagination params="products" total={total} pages={pages} />
     </>
   );
 }

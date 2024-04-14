@@ -27,62 +27,29 @@ export function TablePagination({
   const limit = searchParams.get("limit") ?? "10";
   const hasPrevPage = Number(page) > 1;
   const hasNextPage = Number(page) < pages;
+  const totalPages = Math.ceil(total / Number(limit));
 
   return (
     <Pagination>
-      <PaginationContent>
-        <PaginationItem>
-          <Button disabled={!hasPrevPage} variant="link">
-            <PaginationPrevious
-              href={`/${params}/?page=${Number(page) - 1}&limit=${limit}`}
-            />
-          </Button>
-        </PaginationItem>
-
-        <PaginationItem>
-          <Button
-            disabled={!hasPrevPage}
-            variant="link"
-            className="disabled:hidden"
-          >
-            <PaginationLink
-              href={`/${params}/?page=${Number(page) - 1}&limit=${limit}`}
-            >
-              {Number(page) - 1}
-            </PaginationLink>
-          </Button>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#" isActive>
-            {page}
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <Button
-            disabled={!hasNextPage}
-            variant="link"
-            className="disabled:hidden"
-          >
-            <PaginationLink
-              href={`/${params}?page=${Number(page) + 1}&limit=${limit}`}
-            >
-              {Number(page) + 1}
-            </PaginationLink>
-          </Button>
-        </PaginationItem>
-        <PaginationEllipsis />
-        <PaginationItem>
-          <PaginationLink href={`/${params}?page=${pages}&limit=${limit}`}>
-            {pages}
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <Button disabled={!hasNextPage} variant="link">
-            <PaginationNext
-              href={`/${params}?page=${Number(page) + 1}&limit=${limit}`}
-            />
-          </Button>
-        </PaginationItem>
+      <PaginationContent className="flex justify-between w-full pt-2">
+        <span className="text-muted-foreground text-sm">{`${pages} of ${totalPages}`}</span>
+        <div className="flex gap-4">
+          <PaginationItem className="w-0 bg-red-500">
+            <Button disabled={!hasPrevPage} variant="link">
+              <PaginationPrevious
+                href={`/${params}/?page=${Number(page) - 1}&limit=${limit}`}
+              />
+            </Button>
+          </PaginationItem>
+          <PaginationItem></PaginationItem>
+          <PaginationItem>
+            <Button disabled={!hasNextPage} variant="link">
+              <PaginationNext
+                href={`/${params}?page=${Number(page) + 1}&limit=${limit}`}
+              />
+            </Button>
+          </PaginationItem>
+        </div>
       </PaginationContent>
     </Pagination>
   );

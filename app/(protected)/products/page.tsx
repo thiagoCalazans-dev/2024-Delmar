@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { ProductTable } from "@/components/tables/products-table";
+import { NewProductModal } from "@/components/modals/form-new-product-modal";
 
 export default async function Page({
   searchParams,
@@ -54,13 +55,7 @@ export default async function Page({
               <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <Button size="sm" className="h-8 gap-1">
-            <PlusCircle className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Add Product
-            </span>
-          </Button>
+          <NewProductModal />
         </div>
       </div>
       <Card>
