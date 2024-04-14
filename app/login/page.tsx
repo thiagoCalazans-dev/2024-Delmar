@@ -12,30 +12,24 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Login } from "@/schemas/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-export const FormLoginSchema = z.object({
-  email: z.string().email("Email inválido"),
-  password: z.string().min(4, "Senha de ter ao menos 4 digitos"),
-});
-export type FormLogin = z.infer<typeof FormLoginSchema>;
 
 export default function LoginPage() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormLogin>({
-    resolver: zodResolver(FormLoginSchema),
+  } = useForm<Login>({
+    resolver: zodResolver(Login),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  async function onSubmit(data: FormLogin) {
+  async function onSubmit(data: Login) {
     await login(data);
   }
 

@@ -1,6 +1,6 @@
 import { api } from "@/lib/supabase/client";
 import { createServerClient } from "@/lib/supabase/server";
-import { Product } from "@/schemas/prodcuts";
+import { Product } from "@/schemas/products";
 
 type getProductsParams = {
   page?: string | string[];

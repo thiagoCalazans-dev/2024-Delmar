@@ -4,9 +4,9 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createServerClient } from "@/lib/supabase/server";
-import { FormLogin } from "@/app/login/page";
+import { Login } from "@/schemas/login";
 
-export async function login(data: FormLogin) {
+export async function login(data: Login) {
   const supabase = createServerClient();
   const { error } = await supabase.auth.signInWithPassword(data);
 
