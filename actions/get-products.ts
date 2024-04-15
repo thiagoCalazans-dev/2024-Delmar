@@ -1,5 +1,4 @@
 import { api } from "@/lib/supabase/client";
-import { createServerClient } from "@/lib/supabase/server";
 import { Product } from "@/schemas/products";
 
 type getProductsParams = {
@@ -18,6 +17,8 @@ export async function getProducts({ page, limit }: getProductsParams) {
     .select("*", { count: "exact" })
     .order("name", { ascending: false })
     .range(startIndex, endIndex);
+
+  console.log(error?.message);
 
   if (error) throw new Error("Failed to fetch data");
 

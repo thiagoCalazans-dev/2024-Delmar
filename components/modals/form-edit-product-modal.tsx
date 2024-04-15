@@ -11,7 +11,7 @@ import {
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { PlusCircle } from "lucide-react";
+import { Pencil, PlusCircle } from "lucide-react";
 import { Product } from "@/schemas/products";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,8 +20,11 @@ import { addProduct } from "@/actions/add-product";
 
 const FormProduct = Product.omit({ id: true });
 type FormProduct = z.infer<typeof FormProduct>;
+interface EditProductModalParams {
+  product: Product;
+}
 
-export function NewProductModal() {
+export function EditProductModal({ product }: EditProductModalParams) {
   const {
     register,
     handleSubmit,
@@ -29,15 +32,15 @@ export function NewProductModal() {
   } = useForm<FormProduct>({
     resolver: zodResolver(FormProduct),
     defaultValues: {
-      brand: "",
-      category: "",
-      code: "",
-      color: "",
-      cost: 0,
-      name: "",
-      price: 0,
-      quantity: 1,
-      size: "",
+      brand: product.brand,
+      category: product.category,
+      code: product.code,
+      color: product.color,
+      cost: product.cost,
+      name: product.name,
+      price: product.price,
+      quantity: product.quantity,
+      size: product.size,
     },
   });
 
@@ -48,10 +51,10 @@ export function NewProductModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="sm" className="h-8 gap-1">
-          <PlusCircle className="h-3.5 w-3.5" />
+        <Button variant="ghost" size="sm" className="h-8 gap-2  w-full">
+          <Pencil className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Add Product
+            Edit
           </span>
         </Button>
       </DialogTrigger>
@@ -68,6 +71,7 @@ export function NewProductModal() {
               id="name"
               name="name"
               type="text"
+              disabled
             />
             {errors.name && (
               <span className="text-red-500">{errors.name.message}</span>
@@ -80,6 +84,7 @@ export function NewProductModal() {
               id="code"
               name="code"
               type="text"
+              disabled
             />
             {errors.code && (
               <span className="text-red-500">{errors.code.message}</span>
@@ -93,6 +98,7 @@ export function NewProductModal() {
                 id="brand"
                 name="brand"
                 type="text"
+                disabled
               />
               {errors.brand && (
                 <span className="text-red-500">{errors.brand.message}</span>
@@ -106,6 +112,7 @@ export function NewProductModal() {
                 id="color"
                 name="color"
                 type="text"
+                disabled
               />
               {errors.color && (
                 <span className="text-red-500">{errors.color.message}</span>
@@ -118,6 +125,7 @@ export function NewProductModal() {
                 id="size"
                 name="size"
                 type="text"
+                disabled
               />
               {errors.size && (
                 <span className="text-red-500">{errors.size.message}</span>
@@ -130,6 +138,7 @@ export function NewProductModal() {
                 id="category"
                 name="category"
                 type="text"
+                disabled
               />
               {errors.category && (
                 <span className="text-red-500">{errors.category.message}</span>

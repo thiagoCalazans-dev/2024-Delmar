@@ -2,7 +2,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -22,6 +21,7 @@ import { getProducts } from "@/actions/get-products";
 import { TablePagination } from "../ui/table-pagination";
 import { formatCurrencyTo } from "@/helpers/currency-format";
 import { Separator } from "../ui/separator";
+import { EditProductModal } from "../modals/form-edit-product-modal";
 
 export async function ProductTable({ limit, page }: any) {
   const { data, pages, total } = await getProducts({ limit, page });
@@ -110,7 +110,9 @@ export async function ProductTable({ limit, page }: any) {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <EditProductModal  product={item} />
+                      </DropdownMenuItem>
                       <DropdownMenuItem>Delete</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
