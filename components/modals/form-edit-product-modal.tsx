@@ -11,14 +11,14 @@ import {
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Pencil, PlusCircle } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { Product } from "@/schemas/products";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { addProduct } from "@/actions/add-product";
+import { editProductAction } from "@/actions/edit-product";
 
-const FormProduct = Product.omit({ id: true });
+const FormProduct = Product;
 type FormProduct = z.infer<typeof FormProduct>;
 interface EditProductModalParams {
   product: Product;
@@ -32,6 +32,7 @@ export function EditProductModal({ product }: EditProductModalParams) {
   } = useForm<FormProduct>({
     resolver: zodResolver(FormProduct),
     defaultValues: {
+      id: product.id,
       brand: product.brand,
       category: product.category,
       code: product.code,
@@ -45,23 +46,25 @@ export function EditProductModal({ product }: EditProductModalParams) {
   });
 
   function onSubmit(data: FormProduct) {
-    addProduct(data);
+    editProductAction(data);
   }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="h-8 gap-2  w-full">
+        <Button
+          type="button"
+          variant="outline"
+          size="icon"
+          className="h-8 gap-2  w-full"
+        >
           <Pencil className="h-3.5 w-3.5" />
-          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Edit
-          </span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-3xl">
         <DialogHeader>
-          <DialogTitle>New Product</DialogTitle>
-          <DialogDescription>Add a new product for sales.</DialogDescription>
+          <DialogTitle>Edit Product</DialogTitle>
+          <DialogDescription>Edit product for sales.</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
           <div className="grid gap-2">
@@ -173,6 +176,7 @@ export function EditProductModal({ product }: EditProductModalParams) {
               {...register("quantity", { required: true })}
               id="quantity"
               name="quantity"
+              type="number"
             />
             {errors.quantity && (
               <span className="text-red-500">{errors.quantity.message}</span>

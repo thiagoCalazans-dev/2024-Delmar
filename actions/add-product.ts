@@ -1,6 +1,7 @@
 "use server";
 import { createServerClient } from "@/lib/supabase/server";
 import { Product } from "@/schemas/products";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const AddProductParams = Product.omit({ id: true });
@@ -16,4 +17,6 @@ export async function addProduct(data: AddProductParams) {
   if (error) {
     console.log(error);
   }
+
+  revalidatePath("/products");
 }

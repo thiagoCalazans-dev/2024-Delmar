@@ -15,13 +15,14 @@ import {
   DropdownMenuItem,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, Trash } from "lucide-react";
 
 import { getProducts } from "@/actions/get-products";
 import { TablePagination } from "../ui/table-pagination";
 import { formatCurrencyTo } from "@/helpers/currency-format";
 import { Separator } from "../ui/separator";
 import { EditProductModal } from "../modals/form-edit-product-modal";
+import { RemoveProductModal } from "../modals/remove-product-modal";
 
 export async function ProductTable({ limit, page }: any) {
   const { data, pages, total } = await getProducts({ limit, page });
@@ -100,8 +101,9 @@ export async function ProductTable({ limit, page }: any) {
                   {formatCurrencyTo.Real(item.price)}
                 </TableCell>
                 <TableCell className="font-medium">{item.quantity}</TableCell>
-                <TableCell>
-                  <DropdownMenu>
+                <TableCell className="flex gap-4">
+                  <EditProductModal product={item} />
+                  {/* <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button aria-haspopup="true" size="icon" variant="ghost">
                         <MoreHorizontal className="h-4 w-4" />
@@ -111,11 +113,12 @@ export async function ProductTable({ limit, page }: any) {
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                       <DropdownMenuItem>
-                        <EditProductModal  product={item} />
+                        <EditProductModal product={item} />
                       </DropdownMenuItem>
                       <DropdownMenuItem>Delete</DropdownMenuItem>
                     </DropdownMenuContent>
-                  </DropdownMenu>
+                  </DropdownMenu> */}
+                  <RemoveProductModal id={item.id} />
                 </TableCell>
               </TableRow>
             );
