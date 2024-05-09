@@ -1,27 +1,23 @@
 "use server";
-import { createServerClient } from "@/lib/supabase/server";
-import { Product } from "@/schemas/products";
+import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-const RemoveProducParams = z.object({
+const RemoveProductParams = z.object({
   id: z.number(),
 });
-type RemoveProducParams = z.infer<typeof RemoveProducParams>;
+type RemoveProductParams = z.infer<typeof RemoveProductParams>;
 
-export async function removeProductAction(data: RemoveProducParams) {
-  const supabase = createServerClient();
+export async function removeProductAction(data: RemoveProductParams) {
+  try {
+    const { id } = RemoveProductParams.parse(data);
 
-  const { error, status } = await supabase
-    .from("products")
-    .delete()
-    .eq("id", data.id);
+    await db.product.delete({
+      where: { id },
+    });
 
-  if (error) {
+    revalidatePath("/products");
+  } catch (error) {
     console.log(error);
   }
-
-  console.log(status);
-
-  revalidatePath("/products");
 }

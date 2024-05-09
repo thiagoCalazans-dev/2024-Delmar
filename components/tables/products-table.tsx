@@ -7,15 +7,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "../ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuItem,
-} from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { MoreHorizontal, Trash } from "lucide-react";
 
 import { getProducts } from "@/actions/get-products";
 import { TablePagination } from "../ui/table-pagination";

@@ -1,6 +1,6 @@
 "use server";
-import { createServerClient } from "@/lib/supabase/server";
-import { Product } from "@/schemas/products";
+import { db } from "@/lib/prisma";
+import { Product } from "@/schemas/product";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -8,15 +8,15 @@ const AddProductParams = Product.omit({ id: true });
 type AddProductParams = z.infer<typeof AddProductParams>;
 
 export async function addProduct(data: AddProductParams) {
-  const supabase = createServerClient();
+  try {
+    const parsedData = AddProductParams.parse(data);
 
-  const parsedData = AddProductParams.parse(data);
+    await db.product.create({
+      data: parsedData,
+    });
 
-  const { error } = await supabase.from("products").insert(parsedData);
-
-  if (error) {
+    revalidatePath("/products");
+  } catch (error) {
     console.log(error);
   }
-
-  revalidatePath("/products");
 }

@@ -20,7 +20,7 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isLoading },
   } = useForm<Login>({
     resolver: zodResolver(Login),
     defaultValues: {
@@ -70,7 +70,9 @@ export default function LoginPage() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full">Sign in</Button>
+            <Button disabled={isLoading} className="w-full">
+              Sign in
+            </Button>
           </CardFooter>
         </form>
       </Card>

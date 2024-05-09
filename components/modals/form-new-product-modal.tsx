@@ -12,7 +12,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { PlusCircle } from "lucide-react";
-import { Product } from "@/schemas/products";
+import { Product } from "@/schemas/product";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";

@@ -1,21 +1,18 @@
 import { db } from "@/lib/prisma";
-import { Product } from "@/schemas/product";
+import { Order } from "@/schemas/order";
 import { z } from "zod";
 
-const getProductsParams = z.object({
+const getOrdersParams = z.object({
   page: z.string().or(z.string().array()).optional(),
   limit: z.string().or(z.string().array()).optional(),
 });
 
-type getProductsParams = z.infer<typeof getProductsParams>;
+type getOrdersParams = z.infer<typeof getOrdersParams>;
 
-export async function getProducts({
-  page = "1",
-  limit = "10",
-}: getProductsParams) {
-  //controller
+export async function getOrders({ page = "1", limit = "10" }: getOrdersParams) {
   try {
-    const { limit: parsedLimit, page: parsedPage } = getProductsParams.parse({
+    //controller
+    const { limit: parsedLimit, page: parsedPage } = getOrdersParams.parse({
       page,
       limit,
     });
@@ -24,20 +21,20 @@ export async function getProducts({
     const take = Number(parsedLimit);
 
     //repository
-    const [dbProducts, total] = await db.$transaction([
-      db.product.findMany({
+    const [dbOrders, total] = await db.$transaction([
+      db.order.findMany({
         skip,
         take,
       }),
-      db.product.count(),
+      db.order.count(),
     ]);
 
     const pages = Math.ceil(total / take);
 
-    const products = Product.array().parse(dbProducts);
+    const orders = Order.array().parse(dbOrders);
 
     const output = {
-      data: products,
+      data: orders,
       total: total,
       pages: pages,
     };

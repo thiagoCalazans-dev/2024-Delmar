@@ -1,6 +1,7 @@
 "use server";
+import { db } from "@/lib/prisma";
 import { createServerClient } from "@/lib/supabase/server";
-import { Product } from "@/schemas/products";
+import { Product } from "@/schemas/product";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -8,18 +9,22 @@ const EditProducParams = Product;
 type EditProducParams = z.infer<typeof EditProducParams>;
 
 export async function editProductAction(data: EditProducParams) {
-  const supabase = createServerClient();
+  try {
+    const parsedData = EditProducParams.parse(data);
 
-  const parsedData = EditProducParams.parse(data);
+    await db.product.update({
+      where: {
+        id: parsedData.id,
+      },
+      data: {
+        quantity: parsedData.quantity,
+        price: parsedData.price,
+        cost: parsedData.cost,
+      },
+    });
 
-  const { error } = await supabase
-    .from("products")
-    .update(parsedData)
-    .eq("id", data.id);
-
-  if (error) {
+    revalidatePath("/products");
+  } catch (error) {
     console.log(error);
   }
-
-  revalidatePath("/products");
 }
